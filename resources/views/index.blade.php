@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="app">
-
+    <router-view></router-view>
     <example-component></example-component>
     <h1>Mereja yo!!!</h1>
 
