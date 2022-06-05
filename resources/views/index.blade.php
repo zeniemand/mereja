@@ -11,8 +11,6 @@
 <body>
 <div id="app">
     <router-view></router-view>
-    <example-component></example-component>
-    <h1>Mereja yo!!!</h1>
 
 </div>
 <script src="{{mix('js/app.js')}}"></script>

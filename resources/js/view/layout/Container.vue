@@ -1,8 +1,11 @@
 <template>
 <h1 class="container">Vue Router Hello!!!</h1>
+    <my-button>реєстрація</my-button>
+    <my-input></my-input>
 </template>
 
 <script>
+
 export default {
     name: "Container"
 }
