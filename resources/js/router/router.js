@@ -1,11 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import Container from "./view/layout/Container";
-import Register from "./view/auth/Register";
-import Login from "./view/auth/Login";
-import Dashboard from "./view/pages/Dashboard";
-import UserProfile from "./view/pages/UserProfile";
-import Middleware from "./middleware";
-import store from "./store";
+import Container from "../view/layout/Container";
+import Register from "../view/auth/Register";
+import Login from "../view/auth/Login";
+import Dashboard from "../view/pages/Dashboard";
+import UserProfile from "../view/pages/UserProfile";
+import Middleware from "../middleware";
+import store from "../store";
+import middlewarePipeline from "./middlewarePipeline";
 
 const routes = [
     {
@@ -35,17 +36,15 @@ const routes = [
         component: Dashboard,
         meta: {
             middleware: [Middleware.auth]
+        }
+    },
+    {
+        path: "/dashboard/userprofile",
+        name: UserProfile,
+        component: UserProfile,
+        meta: {
+            middleware: [Middleware.auth, Middleware.isSubscribed]
         },
-        children: [
-            {
-                path: "/dashboard/userprofile",
-                name: 'dashboard.userprofile',
-                component: UserProfile,
-                meta: {
-                    middleware: [Middleware.auth, Middleware.isSubscribed]
-                },
-            }
-        ]
     }
 ];
 
@@ -69,7 +68,8 @@ router.beforeEach((to, from, next) => {
     }
 
     return middleware[0]({
-        ...context
+        ...context,
+        next: middlewarePipeline(context, middleware, 1)
     });
 
 });
